@@ -19,11 +19,14 @@ export class MovieView extends React.Component {
                     <span className="label">Description: </span>
                     <span className="value">{movie.Description}</span>
                 </div>
-                {/*Tried adding the director to moview view, but to be reviewed
-                    <div className="movie-director">
+                <div className="movie-director">
                     <span className="label">Director: </span>
-                    <span className="value">{movie.Director.map(function (movie) { return movie.Director.Name; })}</span>
-                     </div>*/}
+                    <span className="value">{movie.Director.Name}</span>
+                </div>
+                <div className="movie-genre">
+                    <span className="label">Genre: </span>
+                    <span className="value">{movie.Genre.Name}</span>
+                </div>
 
                 <Button variant="outline-dark" onClick={() => { onBackClick(null); }}>Back</Button>
 
