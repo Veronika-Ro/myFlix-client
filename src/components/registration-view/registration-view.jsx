@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -16,7 +17,20 @@ export function RegistrationView(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(username, password, email, birthdate);
-        props.onRegister(username);
+        axios.post('https://veronikas-myflix-app.herokuapp.com/users', {
+            "UserName": username,
+            "Password": password,
+            "Email": email,
+            "Birthday": birthday
+        })
+            .then(response => {
+                const data = response.data;
+                console.log(data);
+                window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+            })
+            .catch(e => {
+                console.log('error registering the user')
+            });
 
     };
 
@@ -50,6 +64,3 @@ export function RegistrationView(props) {
     );
 }
 
-RegistrationView.propTypes = {
-    onRegister: PropTypes.func.isRequired
-};
