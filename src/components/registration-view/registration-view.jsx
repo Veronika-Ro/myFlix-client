@@ -10,13 +10,13 @@ export function RegistrationView(props) {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [birthdate, setBirthdate] = useState('');
+    const [birthday, setBirthday] = useState('');
 
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(username, password, email, birthdate);
+        console.log(username, password, email, birthday);
         axios.post('https://veronikas-myflix-app.herokuapp.com/users', {
             "UserName": username,
             "Password": password,
@@ -55,7 +55,7 @@ export function RegistrationView(props) {
 
                     <Form.Group controlId="formBasicDateOfBirth">
                         <Form.Label>Date of birth:</Form.Label>
-                        <Form.Control type="birthdate" placeholder="Enter your Date of Birth" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
+                        <Form.Control type="birthday" placeholder="Enter your Date of Birth" value={birthday} onChange={e => setBirthday(e.target.value)} />
                     </Form.Group>
                     <Button variant="outline-dark" type="submit" onClick={handleSubmit}>Submit</Button>
                 </Form>
