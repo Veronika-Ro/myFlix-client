@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 export class GenreView extends React.Component {
 
     render() {
-        const { genre } = this.props;
+        const { movie, onBackClik } = this.props;
 
         return (
             <Card>
@@ -25,17 +25,11 @@ export class GenreView extends React.Component {
 
                 </div>
 
-                <Route path="/genre/:name" render={({ match, history }) => {
-                    if (movies.length === 0) return <div className="main-view" />;
-                    return <Col md={8}>
-                        <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() => history.goBack()} />
-                    </Col>
-                }
-                } />
-
+                <button onClick={() => { onBackClick(null); }}>Back</button>
 
             </Card >
 
         );
     }
 }
+
