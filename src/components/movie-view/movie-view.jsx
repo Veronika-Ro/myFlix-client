@@ -43,11 +43,7 @@ export class MovieView extends React.Component {
 
                 </div>
 
-                <Route path="/movies/:movieId" render={({ match, history }) => {
-                    return <Col md={8}>
-                        <MovieView movie={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
-                    </Col>
-                }} />
+                <button onClick={() => { onBackClick(null); }}>Back</button>
 
 
             </Card >
