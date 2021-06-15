@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { RegistrationView } from '../registration-view/registration-view';
 
 import { Link } from "react-router-dom";
 
@@ -55,10 +56,10 @@ export function LoginView(props) {
             </Row>
             <Row className="justify-content-md-center">
                 <Col className="text-center" xs lg="6">
-                    {/*Link to registration view to be amended
+                    {/*Link to registration view to be amended */}
                     <Link to={`/register/${RegistrationView}`}>
                         <Button variant="link"><span className="value">Register here!</span></Button>
-                    </Link>*/}
+                    </Link>
                 </Col>
             </Row>
         </div >
