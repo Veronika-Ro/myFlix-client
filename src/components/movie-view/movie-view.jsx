@@ -8,20 +8,22 @@ import { Link } from "react-router-dom";
 export class MovieView extends React.Component {
 
     render() {
-        const { movie } = this.props;
+        const { movie, onBackClick } = this.props;
 
         return (
-            <Card>
-
-                <div className="movie-view">
+            <Card className="movie-view">
+                <Card.Body>
                     <ListGroup variant="flush">
                         <ListGroup.Item className="text-center movie-poster">
                             <img src={movie.ImagePath} />
                         </ListGroup.Item>
-                        <ListGroup.Item className="movie-title">
-                            <span className="label">Title: </span>
-                            <span className="value">{movie.Title}</span>
-                        </ListGroup.Item>
+                    </ListGroup>
+
+                    <Card.Title className="text-center movie-title">
+                        <span className="value">{movie.Title}</span>
+                    </Card.Title>
+
+                    <ListGroup variant="flush">
                         <ListGroup.Item className="movie-description">
                             <span className="label">Description: </span>
                             <span className="value">{movie.Description}</span>
@@ -40,10 +42,9 @@ export class MovieView extends React.Component {
                             </Link>
                         </ListGroup.Item>
                     </ListGroup>
+                </Card.Body>
 
-                </div>
-
-                <button onClick={() => { onBackClick(null); }}>Back</button>
+                <Button variant="outline-dark" size="sm" onClick={() => { onBackClick(null); }}>Back</Button>
 
 
             </Card >
