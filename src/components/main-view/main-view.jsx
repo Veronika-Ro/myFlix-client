@@ -7,8 +7,11 @@ import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import { DirectorView } from '../director-view/director-view'
-import { GenreView } from '../genre-view/genre-view'
+import { DirectorView } from '../director-view/director-view';
+import { GenreView } from '../genre-view/genre-view';
+import { ProfileView } from '../profile-view/profile-view';
+// update view to be added
+// import { UpdateView } from '../update-view/update-view';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -20,7 +23,10 @@ class MainView extends React.Component {
         // Initial state is set to null
         this.state = {
             movies: [],
-            user: null
+            selectedMovie: null,
+            user: null,
+            register: null,
+            userData: null
         }
     }
 
@@ -66,6 +72,7 @@ class MainView extends React.Component {
         this.setState({
             registered
         });
+        window.open("/", "_self");
     }
 
     onLoggedOut() {
@@ -74,10 +81,12 @@ class MainView extends React.Component {
         this.setState({
             user: null
         });
+        console.log("logout successful");
+        window.open("/", "_self");
     }
 
     render() {
-        const { registered, user, movies, } = this.state;
+        const { registered, user, movies, selectedMovie, userData } = this.state;
 
         return (
             <Router>
@@ -132,6 +141,29 @@ class MainView extends React.Component {
                         </Col>
                     }
                     } />
+                    <Route path="/users/:username" render={({ history }) => {
+                        if (!user) return <Col md={6}>
+                            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                        </Col>
+
+                        if (movies.length === 0) return <div className="main-view" />;
+
+                        return <Col md={8}>
+                            <ProfileView movies={movies} user={user} onBackClick={() => history.goBack()} />
+                        </Col>
+                    }} />
+
+                    {/* update-view to be added
+                     <Route path="/users/:Username" render={({ history }) => {
+                        if (!user) return <Col md={6}>
+                            <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                        </Col>
+
+                        return <Col md={8}>
+                            <UpdateView movies={movies} user={user} onBackClick={() => history.goBack()} />
+                        </Col>
+                    }} /> */}
+
                 </Row>
             </Router>
         );
