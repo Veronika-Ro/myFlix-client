@@ -1,35 +1,26 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
-
-import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import './genre-view.scss';
 
 export class GenreView extends React.Component {
 
     render() {
-        const { movie, onBackClik } = this.props;
+        const { genre, onBackClick } = this.props;
 
         return (
-            <Card>
+            <Card className="GenreView">
+                <Card.Body>
+                    <Card.Title className="genre-name">
+                        <span className="value">{genre.Name}</span>
+                    </Card.Title>
+                    <Card.Text className="genre-description">
+                        <span className="value">{genre.Description}</span>
+                    </Card.Text>
+                </Card.Body>
+                <Button variant="outline-dark" size="sm" onClick={() => { onBackClick(null); }}>Back</Button>
 
-                <div className="genre-view">
-                    <ListGroup variant="flush">
-                        <ListGroup.Item className="genre-name">
-                            <span className="value">{movie.Genre.Name}</span>
-                        </ListGroup.Item>
-                        <ListGroup.Item className="genre-description">
-                            <span className="value">{movie.Genre.Description}</span>
-                        </ListGroup.Item>
-                    </ListGroup>
-
-                </div>
-
-                <button onClick={() => { onBackClick(null); }}>Back</button>
-
-            </Card >
-
+            </Card>
         );
     }
 }
-
