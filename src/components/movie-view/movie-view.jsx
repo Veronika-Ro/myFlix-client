@@ -2,10 +2,37 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
+import axios from 'axios';
 
 import { Link } from "react-router-dom";
 
 export class MovieView extends React.Component {
+
+    handleAdd() {
+        const token = localStorage.getItem("token");
+        const user = localStorage.getItem("user");
+        axios.post(`https://veronikas-myflix-app.herokuapp.com/users/${user}` +
+            this.props.movie._id, {},
+            { headers: { Authorization: `Bearer ${token}` } }
+        )
+            .then((response) => {
+                console.log(response);
+                alert(this.props.movie.Title + " has been added to your favorites!");
+            })
+    }
+
+    handleRemove() {
+        const token = localStorage.getItem("token");
+        const user = localStorage.getItem("user");
+        axios.post(`https://veronikas-myflix-app.herokuapp.com/users/${user}` +
+            this.props.movie._id, {},
+            { headers: { Authorization: `Bearer ${token}` } }
+        )
+            .then((response) => {
+                console.log(response);
+                alert(this.props.movie.Title + " has been removed from your favorites!");
+            })
+    }
 
     render() {
         const { movie, onBackClick } = this.props;
@@ -42,6 +69,17 @@ export class MovieView extends React.Component {
                             </Link>
                         </ListGroup.Item>
                     </ListGroup>
+
+                    <div className="favorite-buttons">
+                        <Link to={`/movies/${movie.Title}`}>
+                            <Button block type="button" variant="success" onClick={() => this.handleAdd(movie)}>Add to favorites</Button>
+                        </Link>
+                    </div>
+                    <div className="favorite-buttons">
+                        <Link to={`/movies/${movie.Title}`}>
+                            <Button block type="button" variant="danger" onClick={() => this.handleRemove(movie)}>Remove from favorites</Button>
+                        </Link>
+                    </div>
                 </Card.Body>
 
                 <Button variant="outline-dark" size="sm" onClick={() => { onBackClick(null); }}>Back</Button>
