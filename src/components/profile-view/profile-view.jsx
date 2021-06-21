@@ -29,7 +29,7 @@ export class ProfileView extends React.Component {
     }
 
     getUser(token) {
-        let url = 'https://veronikas-myflix-app.herokuapp.com/users' +
+        let url = 'https://veronikas-myflix-app.herokuapp.com/users/' +
             localStorage.getItem('user');
         axios
             .get(url, {
@@ -115,11 +115,11 @@ export class ProfileView extends React.Component {
         let BirthdayError = {};
         let isValid = true;
 
-        if (this.state.UserName.trim().length < 5) {
+        if (this.state.UserName.length < 5) {
             UserNameError.usernameShort = "Must be alphanumeric and contain more than 5 characters";
             isValid = false;
         }
-        if (this.state.Password.trim().length < 3) {
+        if (this.state.Password.length < 3) {
             PasswordError.passwordMissing = "You must enter a current password, or new password must be longer than 3 characters.";
             isValid = false;
         }
@@ -176,13 +176,12 @@ export class ProfileView extends React.Component {
                                 <Form.Label>{this.state.birthDate}</Form.Label>
                             </Form.Group>
 
-                            <Link to={`/users/${this.state.UserName}`}>
+                            <Link to={`${this.state.UserName}/update`}>
                                 <Button className="mb-2" variant="dark"
                                     type="link"
                                     size="md"
-                                    block
-                                    onClick={(e) => this.handleUpdate(e)} >
-                                    Update Information
+                                >
+                                    Edit
                                 </Button>
                             </Link>
 

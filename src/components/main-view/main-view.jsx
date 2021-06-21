@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, Link } from "react-router-dom";
 
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -10,15 +10,21 @@ import { RegistrationView } from '../registration-view/registration-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
+import { UpdateView } from '../update-view/update-view';
 // update view to be added
 // import { UpdateView } from '../update-view/update-view';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import { NavDropdown } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 
 class MainView extends React.Component {
 
     constructor() {
+        //super enables you to inherit the parent class- or react component
         super();
         // Initial state is set to null
         this.state = {
@@ -85,11 +91,23 @@ class MainView extends React.Component {
         window.open("/", "_self");
     }
 
+    //all class components need render and return method to display info and functions need the return method
     render() {
         const { registered, user, movies, selectedMovie, userData } = this.state;
 
         return (
             <Router>
+
+                <Row> <Col className="mb-5">    <Navbar bg="dark" variant="dark">
+                    <Navbar.Brand as={Link} to="/">MyFlix</Navbar.Brand>
+                    <Nav className="mr-auto">
+                        <Nav.Link as={Link} to="/">Home</Nav.Link>
+                        <Nav.Link as={Link} to={`/users/${this.props.user}`}>My Profile</Nav.Link>
+                    </Nav>
+                    <Button variant="outline-light" onClick={() => { this.onLoggedOut() }}>Logout</Button>
+                </Navbar>
+                </Col> </Row>
+
                 <Row className="main-view justify-content-md-center">
                     <Route exact path="/" render={() => {
                         if (!user) return <Col>
@@ -153,8 +171,8 @@ class MainView extends React.Component {
                         </Col>
                     }} />
 
-                    {/* update-view to be added
-                     <Route path="/users/:Username" render={({ history }) => {
+
+                    <Route path="/users/:username/update" render={({ history }) => {
                         if (!user) return <Col md={6}>
                             <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                         </Col>
@@ -162,7 +180,7 @@ class MainView extends React.Component {
                         return <Col md={8}>
                             <UpdateView movies={movies} user={user} onBackClick={() => history.goBack()} />
                         </Col>
-                    }} /> */}
+                    }} />
 
                 </Row>
             </Router>
