@@ -8,30 +8,46 @@ import { Link } from "react-router-dom";
 
 export class MovieView extends React.Component {
 
-    handleAdd() {
-        const token = localStorage.getItem("token");
-        const user = localStorage.getItem("user");
-        axios.post(`https://veronikas-myflix-app.herokuapp.com/users/${user}` +
-            this.props.movie._id, {},
-            { headers: { Authorization: `Bearer ${token}` } }
-        )
-            .then((response) => {
-                console.log(response);
-                alert(this.props.movie.Title + " has been added to your favorites!");
+    addFavorite(movieData) {
+        let token = localStorage.getItem('token');
+        let url = "https://veronikas-myflix-app.herokuapp.com/users/" + localStorage.getItem('user') +
+            "/Movies/" + movieData._id;
+        var config = {
+            method: 'post',
+            url: url,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-type': 'application/json'
+            },
+        };
+        console.log(token);
+        axios(config)
+
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                alert("Added to favorites!")
             })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
-    handleRemove() {
-        const token = localStorage.getItem("token");
-        const user = localStorage.getItem("user");
-        axios.post(`https://veronikas-myflix-app.herokuapp.com/users/${user}` +
-            this.props.movie._id, {},
-            { headers: { Authorization: `Bearer ${token}` } }
-        )
+    removeFavorite(movie) {
+        let token = localStorage.getItem('token');
+        let url = "https://veronikas-myflix-app.herokuapp.com/users/" + localStorage.getItem('user') +
+            "/Movies/remove/" + movie._id;
+
+        axios
+            .post(url, "", {
+                headers: { Authorization: `Bearer ${user.token}` }
+            })
             .then((response) => {
                 console.log(response);
-                alert(this.props.movie.Title + " has been removed from your favorites!");
+                alert("Removed from favorites.")
             })
+            .catch(err => {
+                console.log(err.response);
+            });
     }
 
     render() {
@@ -70,16 +86,8 @@ export class MovieView extends React.Component {
                         </ListGroup.Item>
                     </ListGroup>
 
-                    <div className="favorite-buttons">
-                        <Link to={`/movies/${movie.Title}`}>
-                            <Button block type="button" variant="success" onClick={() => this.handleAdd(movie)}>Add to favorites</Button>
-                        </Link>
-                    </div>
-                    <div className="favorite-buttons">
-                        <Link to={`/movies/${movie.Title}`}>
-                            <Button block type="button" variant="danger" onClick={() => this.handleRemove(movie)}>Remove from favorites</Button>
-                        </Link>
-                    </div>
+                    <Button className="add mt-3 mr-2 w-50" onClick={() => this.addFavorite(movie)}> Add to Favorites</Button>
+
                 </Card.Body>
 
                 <Button variant="outline-dark" size="sm" onClick={() => { onBackClick(null); }}>Back</Button>

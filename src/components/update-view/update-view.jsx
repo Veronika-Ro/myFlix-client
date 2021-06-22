@@ -17,7 +17,7 @@ export function UpdateView(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(username, password, email, birthday);
-        axios.put('https://veronikas-myflix-app.herokuapp.com/users/:UserName', {
+        axios.put('https://veronikas-myflix-app.herokuapp.com/users/${user}', {
             "UserName": username,
             "Password": password,
             "Email": email,

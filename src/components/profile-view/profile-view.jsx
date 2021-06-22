@@ -158,8 +158,8 @@ export class ProfileView extends React.Component {
             <div className="userProfile" style={{ display: "flex" }}>
                 <Row className="justify-content-md-center">
                     <Col md={12}>
-                        <Form className="justify-content-md-center mb-30">
-                            <h1 style={{ textAlign: "center" }}>{`${user}`}  Profile Details</h1>
+                        <Form className="justify-content-md-center">
+                            <h1 style={{ textAlign: "center" }}>Profile Details</h1>
 
                             <Form.Group controlId="formUsername">
                                 <h4>Username:</h4>
@@ -177,21 +177,20 @@ export class ProfileView extends React.Component {
                             </Form.Group>
 
                             <Link to={`${this.state.UserName}/update`}>
-                                <Button className="mb-2" variant="dark"
+                                <Button className="mb-2" variant="outline-dark"
                                     type="link"
-                                    size="md"
-                                >
+                                    size="md">
                                     Edit
                                 </Button>
                             </Link>
 
-                            <Button className="mb-2" variant="danger"
-                                size="md"
+                            <Button className="mb-2" variant="outline-danger"
+                                size="md" className="float-right"
                                 onClick={() => this.handleDelete()} >
                                 Delete Account
                             </Button>
-                            <Button variant="dark" onClick={() => { onBackClick() }}>Back</Button>
                         </Form>
+                        <Button variant="outline-dark" block onClick={() => { onBackClick() }}>Back</Button>
                     </Col>
 
                     <Col>
