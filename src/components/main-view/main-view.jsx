@@ -18,7 +18,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import { NavDropdown } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
 class MainView extends React.Component {
@@ -98,15 +97,16 @@ class MainView extends React.Component {
         return (
             <Router>
 
-                <Row> <Col className="mb-5">    <Navbar bg="dark" variant="dark">
-                    <Navbar.Brand as={Link} to="/">MyFlix</Navbar.Brand>
-                    <Nav className="mr-auto">
-                        <Nav.Link as={Link} to="/">Home</Nav.Link>
-                        <Nav.Link as={Link} to={`/users/${this.props.user}`}>My Profile</Nav.Link>
-                    </Nav>
-                    <Button variant="outline-light" onClick={() => { this.onLoggedOut() }}>Logout</Button>
-                </Navbar>
-                </Col> </Row>
+                {user && <Row> <Col className="mb-5">
+                    <Navbar bg="dark" variant="dark">
+                        <Navbar.Brand as={Link} to="/">MyFlix</Navbar.Brand>
+                        <Nav className="mr-auto">
+                            <Nav.Link as={Link} to="/">Home</Nav.Link>
+                            <Nav.Link as={Link} to={`/users/${user}`}>My Profile</Nav.Link>
+                        </Nav>
+                        <Button variant="outline-light" onClick={() => { this.onLoggedOut() }}>Logout</Button>
+                    </Navbar>
+                </Col> </Row>}
 
                 <Row className="main-view justify-content-md-center">
                     <Route exact path="/" render={() => {
@@ -160,7 +160,7 @@ class MainView extends React.Component {
                     }
                     } />
 
-                    <Route path="/users/:UserName" render={({ history }) => {
+                    <Route path="/users/:userId" render={({ history }) => {
                         if (!user) return <Col md={6}>
                             <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                         </Col>
@@ -173,7 +173,7 @@ class MainView extends React.Component {
                     }} />
 
 
-                    <Route path="/users/:UserName/update" render={({ history }) => {
+                    <Route path="/users/:userId/update" render={({ history }) => {
                         if (!user) return <Col md={6}>
                             <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                         </Col>

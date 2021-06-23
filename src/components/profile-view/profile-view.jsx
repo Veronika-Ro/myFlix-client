@@ -50,7 +50,7 @@ export class ProfileView extends React.Component {
         const token = localStorage.getItem("token");
         const user = localStorage.getItem("user");
         axios
-            .delete(`https://veronikas-myflix-app.herokuapp.com/users${user}`,
+            .delete(`https://veronikas-myflix-app.herokuapp.com/users/${user}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             )
             .then(() => {
@@ -64,39 +64,9 @@ export class ProfileView extends React.Component {
             });
     }
 
-    handleUpdate(e) {
-        let token = localStorage.getItem("token");
-        let user = localStorage.getItem("user");
-        console.log(this.state);
-        let setisValid = this.formValidation();
-        if (setisValid) {
-            console.log(this.props.setProfile(this.state));
-            axios
-                .put(`https://veronikas-myflix-app.herokuapp.com/users${user}`,
-                    {
-                        UserName: this.state.UserName,
-                        Password: this.state.Password,
-                        Email: this.state.Email,
-                        Birthday: this.state.Birthday
-                    },
-                    { headers: { Authorization: `Bearer ${token}` } }
-                )
-                .then((response) => {
-                    const data = response.data;
-                    localStorage.setItem("user", data.UserName);
-                    console.log(data);
-                    alert(user + " has been updated.");
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error.response.data);
-                });
-        }
-    }
-
     removeFavorite(movie) {
         let token = localStorage.getItem('token');
-        let url = 'https://veronikas-myflix-app.herokuapp.com/users' + localStorage.getItem('user')
+        let url = 'https://veronikas-myflix-app.herokuapp.com/users/' + localStorage.getItem('user')
             + '/favorites/' + movie._id;
         axios
             .delete(url, {
@@ -107,38 +77,6 @@ export class ProfileView extends React.Component {
                 this.componentDidMount();
             });
     }
-
-    formValidation() {
-        let UserNameError = {};
-        let EmailError = {};
-        let PasswordError = {};
-        let BirthdayError = {};
-        let isValid = true;
-
-        if (this.state.UserName.length < 5) {
-            UserNameError.usernameShort = "Must be alphanumeric and contain more than 5 characters";
-            isValid = false;
-        }
-        if (this.state.Password.length < 3) {
-            PasswordError.passwordMissing = "You must enter a current password, or new password must be longer than 3 characters.";
-            isValid = false;
-        }
-        if (!(this.state.Email && this.state.Email.includes(".") && this.state.Email.includes("@"))) {
-            EmailError.emailNotEmail = "Must enter a valid email address.";
-            isValid = false;
-        }
-        if (this.state.birthday === '') {
-            BirthdayError.birthdayEmpty = "Please enter your birthday.";
-            isValid = false;
-        }
-        this.setState({
-            UserNameError: UserNameError,
-            PasswordError: PasswordError,
-            EmailError: EmailError,
-            BirthdayError: BirthdayError,
-        })
-        return isValid;
-    };
 
     handleChange(e) {
         let { name, value } = e.target;
@@ -173,10 +111,10 @@ export class ProfileView extends React.Component {
 
                             <Form.Group controlId="formBasicDate">
                                 <h4>Date of Birth:</h4>
-                                <Form.Label>{this.state.birthDate}</Form.Label>
+                                <Form.Label>{this.state.birthday}</Form.Label>
                             </Form.Group>
 
-                            <Link to={`${this.state.UserName}/update`}>
+                            <Link to={`${this.state.username}/update`}>
                                 <Button className="mb-2" variant="outline-dark"
                                     type="link"
                                     size="md">
