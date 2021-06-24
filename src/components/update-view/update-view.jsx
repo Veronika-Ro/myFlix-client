@@ -20,9 +20,10 @@ export function UpdateView(props) {
         e.preventDefault();
         let token = localStorage.getItem("token");
         let user = localStorage.getItem("user");
-        console.log(this.state);
-        let setisValid = formValidation();
-        if (setisValid) {
+        console.log("User details have been updated");
+        /*  let setisValid = formValidation();
+          if (setisValid) */
+        {
 
             axios
                 .put(`https://veronikas-myflix-app.herokuapp.com/users/${user}`,
@@ -49,37 +50,37 @@ export function UpdateView(props) {
         }
     }
 
-    const formValidation = () => {
-        let UserNameError = {};
-        let EmailError = {};
-        let PasswordError = {};
-        let BirthdayError = {};
-        let isValid = true;
-
-        if (this.state.UserName.length < 5) {
-            UserNameError.usernameShort = "Must be alphanumeric and contain more than 5 characters";
-            isValid = false;
-        }
-        if (this.state.Password.length < 3) {
-            PasswordError.passwordMissing = "You must enter a current password, or new password must be longer than 3 characters.";
-            isValid = false;
-        }
-        if (!(this.state.Email && this.state.Email.includes(".") && this.state.Email.includes("@"))) {
-            EmailError.emailNotEmail = "Must enter a valid email address.";
-            isValid = false;
-        }
-        if (this.state.birthday === '') {
-            BirthdayError.birthdayEmpty = "Please enter your birthday.";
-            isValid = false;
-        }
-        this.setState({
-            UserNameError: UserNameError,
-            PasswordError: PasswordError,
-            EmailError: EmailError,
-            BirthdayError: BirthdayError,
-        })
-        return isValid;
-    };
+    /* const formValidation = () => {
+         let UserNameError = {};
+         let EmailError = {};
+         let PasswordError = {};
+         let BirthdayError = {};
+         let isValid = true;
+ 
+         if (username.length < 5) {
+             UserNameError.usernameShort = "Must be alphanumeric and contain more than 5 characters";
+             isValid = false;
+         }
+         if (password.length < 3) {
+             PasswordError.passwordMissing = "You must enter a current password, or new password must be longer than 3 characters.";
+             isValid = false;
+         }
+         if (!(email && email.includes(".") && email.includes("@"))) {
+             EmailError.emailNotEmail = "Must enter a valid email address.";
+             isValid = false;
+         }
+         if (birthday === '') {
+             BirthdayError.birthdayEmpty = "Please enter your birthday.";
+             isValid = false;
+         }
+         useState({
+             UserNameError: UserNameError,
+             PasswordError: PasswordError,
+             EmailError: EmailError,
+             BirthdayError: BirthdayError,
+         })
+         return isValid;
+     }; */
 
     return (
         <Row className="justify-content-md-center">

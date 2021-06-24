@@ -67,7 +67,8 @@ export class ProfileView extends React.Component {
     removeFavorite(movie) {
         let token = localStorage.getItem('token');
         let url = 'https://veronikas-myflix-app.herokuapp.com/users/' + localStorage.getItem('user')
-            + '/favorites/' + movie._id;
+            + '/Movies/remove/' + movie._id;
+
         axios
             .delete(url, {
                 headers: { Authorization: `Bearer ${token}` },

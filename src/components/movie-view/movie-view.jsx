@@ -8,10 +8,10 @@ import { Link } from "react-router-dom";
 
 export class MovieView extends React.Component {
 
-    addFavorite(movieData) {
+    addFavorite(movie) {
         let token = localStorage.getItem('token');
         let url = "https://veronikas-myflix-app.herokuapp.com/users/" + localStorage.getItem('user') +
-            "/Movies/" + movieData._id;
+            "/Movies/" + movie._id;
         var config = {
             method: 'post',
             url: url,
