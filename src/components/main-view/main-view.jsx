@@ -15,6 +15,7 @@ import { ProfileView } from '../profile-view/profile-view';
 import { UpdateView } from '../update-view/update-view';
 
 import { setMovies } from '../../actions/actions';
+import { setUser } from '../../actions/actions';
 
 import MoviesList from '../movies-list/movies-list';
 
@@ -50,7 +51,7 @@ class MainView extends React.Component {
     }
 
     getMovies(token) {
-        axios.get('https://veronikas-myflix-app.herokuapp.com/movies', {
+        axios.get(`https://veronikas-myflix-app.herokuapp.com/movies`, {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(response => {
@@ -62,11 +63,13 @@ class MainView extends React.Component {
             });
     }
 
+
+
     /* When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
 
     onLoggedIn(authData) {
         console.log(authData);
-        this.setState({
+        this.setUser({
             user: authData.user.UserName
         });
 
@@ -76,7 +79,7 @@ class MainView extends React.Component {
     }
 
     onRegister(registered) {
-        this.setState({
+        this.setUser({
             registered
         });
         window.open("/", "_self");
@@ -85,9 +88,7 @@ class MainView extends React.Component {
     onLoggedOut() {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        this.setState({
-            user: null
-        });
+        this.props.setUser(null);
         console.log("logout successful");
         window.open("/", "_self");
     }
@@ -167,7 +168,10 @@ class MainView extends React.Component {
                         if (movies.length === 0) return <div className="main-view" />;
 
                         return <Col md={8}>
-                            <ProfileView movies={movies} user={user} onBackClick={() => history.goBack()} />
+                            <ProfileView
+                                movies={movies}
+                                getUser={(token) => this.getUser(token)}
+                                onBackClick={() => history.goBack()} />
                         </Col>
                     }} />
 
@@ -190,7 +194,7 @@ class MainView extends React.Component {
 }
 
 let mapStateToProps = state => {
-    return { movies: state.movies }
-}
+    return { movies: state.movies, user: state.user };
+};
 
-export default connect(mapStateToProps, { setMovies })(MainView);
+export default connect(mapStateToProps, { setMovies, setUser })(MainView);

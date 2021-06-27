@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Row, Col, Form, FormControl, Card } from 'react-bootstrap';
-import { MovieCard } from '../movie-card/movie-card';
+
+import { setUser } from '../../actions/actions';
+
+import { connect } from 'react-redux';
 
 import axios from 'axios';
 import { Link } from "react-router-dom";
@@ -29,20 +32,14 @@ export class ProfileView extends React.Component {
     }
 
     getUser(token) {
-        let url = 'https://veronikas-myflix-app.herokuapp.com/users/' +
-            localStorage.getItem('user');
-        axios
-            .get(url, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
+        axios.get(`https://veronikas-myflix-app.herokuapp.com/users/${localStorage.getItem('user')}`, {
+            headers: { Authorization: `Bearer ${token}` }
+        })
             .then((response) => {
-                this.setState({
-                    username: response.data.UserName,
-                    password: response.data.Password,
-                    email: response.data.Email,
-                    birthday: response.data.Birthday,
-                    favoriteMovies: response.data.FavoriteMovies
-                });
+                this.props.setUser(response.data);
+            })
+            .catch(function (error) {
+                console.log('error getting user', error);
             });
     }
 
@@ -87,8 +84,7 @@ export class ProfileView extends React.Component {
     }
 
     render() {
-        const { movies, user, onBackClick, passwordError, usernameError, emailError, birthDateError } = this.props;
-        // const { UsernameError, PasswordError, EmailError, BirthDateError } = this.state;
+        const { movies, user, onBackClick } = this.props;
         const favoriteMovieList = movies.filter((movie) => {
             return this.state.favoriteMovies.includes(movie._id);
         });
@@ -171,3 +167,12 @@ export class ProfileView extends React.Component {
 ProfileView.propTypes = {
     movies: PropTypes.array.isRequired
 };
+
+let mapStateToProps = state => {
+    return {
+        user: state.user,
+        movies: state.movies
+    }
+}
+
+export default connect(mapStateToProps, { setUser })(ProfileView);

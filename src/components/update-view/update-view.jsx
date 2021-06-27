@@ -6,6 +6,11 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+import { updateUser } from '../../actions/actions';
+
+import { connect } from 'react-redux';
+
+
 export function UpdateView(props) {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -36,6 +41,8 @@ export function UpdateView(props) {
                     { headers: { Authorization: `Bearer ${token}` } }
                 )
                 .then((response) => {
+                    //do we need this code?
+                    // this.props.setMovies(response.data);
                     const data = response.data;
                     localStorage.setItem("user", data.UserName);
                     console.log(data);
@@ -112,3 +119,11 @@ export function UpdateView(props) {
     );
 }
 
+let mapStateToProps = state => {
+    return {
+        user: state.user,
+        movies: state.movies
+    }
+}
+
+export default connect(mapStateToProps, { updateUser })(UpdateView);
