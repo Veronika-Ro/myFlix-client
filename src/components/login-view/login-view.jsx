@@ -6,10 +6,11 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { RegistrationView } from '../registration-view/registration-view';
-
+import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 
 export function LoginView(props) {
+    const { onLoggedIn } = props;
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
@@ -17,7 +18,7 @@ export function LoginView(props) {
         e.preventDefault();
         console.log(username, password);
         // Send a request to the server for authentication then call props.onLoggedIn(username)
-        axios.post('https://veronikas-myflix-app.herokuapp.com/login', {
+        axios.post(`https://veronikas-myflix-app.herokuapp.com/login`, {
             UserName: username,
             Password: password
         })
@@ -26,6 +27,7 @@ export function LoginView(props) {
                 props.onLoggedIn(data);
             })
             .catch(e => {
+                alert('Incorrect Username or Password. Please try again or register if you are a new user.');
                 console.log('no such user')
             });
     };
@@ -56,7 +58,6 @@ export function LoginView(props) {
             </Row>
             <Row className="justify-content-md-center">
                 <Col className="text-center" xs lg="6">
-                    {/*Link to registration view to be amended */}
                     <Link to={`/register/${RegistrationView}`}>
                         <Button variant="link"><span className="value">Register here!</span></Button>
                     </Link>
@@ -69,3 +70,9 @@ export function LoginView(props) {
 LoginView.propTypes = {
     onLoggedIn: PropTypes.func.isRequired
 }
+
+const mapDispatchToProps = (dispatch) => ({
+    handleSubmit: (username, password) => dispatch(handleSubmit(username, password))
+});
+
+export default connect(null, mapDispatchToProps)(LoginView);

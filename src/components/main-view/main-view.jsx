@@ -13,11 +13,10 @@ import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
 import { UpdateView } from '../update-view/update-view';
+import MoviesList from '../movies-list/movies-list';
 
 import { setMovies } from '../../actions/actions';
 import { setUser } from '../../actions/actions';
-
-import MoviesList from '../movies-list/movies-list';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -32,26 +31,20 @@ class MainView extends React.Component {
         super();
         // Initial state is set to null
         this.state = {
-            movies: [],
-            selectedMovie: null,
-            user: null,
-            register: null,
-            userData: null
-        }
+            user: null
+        };
     }
 
     componentDidMount() {
         let accessToken = localStorage.getItem('token');
         if (accessToken !== null) {
-            this.setState({
-                user: localStorage.getItem('user')
-            });
+            this.getUser(accessToken);
             this.getMovies(accessToken);
         }
     }
 
     getMovies(token) {
-        axios.get(`https://veronikas-myflix-app.herokuapp.com/movies`, {
+        axios.get('https://veronikas-myflix-app.herokuapp.com/movies', {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(response => {
@@ -63,16 +56,34 @@ class MainView extends React.Component {
             });
     }
 
+    getUser(token) {
+        let url = 'https://veronikas-myflix-app.herokuapp.com/users/' +
+            localStorage.getItem('user');
+        axios
+            .get(url, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+
+            .then((response) => {
+                this.props.setUser(response.data)
+                this.setState({
+                    user: response.data
+                });
+            })
+            .catch(function (error) {
+                console.log('error getting user', error);
+            });
+    }
 
 
     /* When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
 
     onLoggedIn(authData) {
-        console.log(authData);
-        this.setUser({
-            user: authData.user.UserName
+        this.props.setUser(authData);
+        this.setState({
+            user: authData.user.userName
         });
-
+        console.log('onLoggedIn reached', authData)
         localStorage.setItem('token', authData.token);
         localStorage.setItem('user', authData.user.UserName);
         this.getMovies(authData.token);
@@ -82,15 +93,16 @@ class MainView extends React.Component {
         this.setUser({
             registered
         });
-        window.open("/", "_self");
+        window.open("/movies", "_self");
     }
 
     onLoggedOut() {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        this.props.setUser(null);
+        this.setState({
+            user: null
+        });
         console.log("logout successful");
-        window.open("/", "_self");
     }
 
     // all class components need render and return method to display info and functions need the return method

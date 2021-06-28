@@ -31,17 +31,7 @@ export class ProfileView extends React.Component {
         this.getUser(accessToken);
     }
 
-    getUser(token) {
-        axios.get(`https://veronikas-myflix-app.herokuapp.com/users/${localStorage.getItem('user')}`, {
-            headers: { Authorization: `Bearer ${token}` }
-        })
-            .then((response) => {
-                this.props.setUser(response.data);
-            })
-            .catch(function (error) {
-                console.log('error getting user', error);
-            });
-    }
+
 
     handleDelete() {
         const token = localStorage.getItem("token");
