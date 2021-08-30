@@ -1,8 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-
 import { connect } from 'react-redux';
-
 import { BrowserRouter as Router, Route, Redirect, Link } from "react-router-dom";
 
 import { LoginView } from '../login-view/login-view';
@@ -81,7 +79,7 @@ class MainView extends React.Component {
     onLoggedIn(authData) {
         this.props.setUser(authData);
         this.setState({
-            user: authData.user.userName
+            user: authData.user.UserName
         });
         console.log('onLoggedIn reached', authData)
         localStorage.setItem('token', authData.token);
@@ -108,7 +106,7 @@ class MainView extends React.Component {
     // all class components need render and return method to display info and functions need the return method
     render() {
         let { movies } = this.props;
-        let { registered, user, selectedMovie, userData } = this.state;
+        let { onLoggedIn, registered, user, selectedMovie, userData } = this.state;
 
         return (
             <Router>

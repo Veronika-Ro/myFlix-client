@@ -1,0 +1,1 @@
+{"version":3,"sources":["components/genre-view/genre-view.scss","index.scss","components/profile-view/profile-view.scss"],"names":[],"mappings":"AAAA,ACEA;EACE,OAHM;;ACAR","file":"src.78399e21.css","sourceRoot":"..\\src","sourcesContent":["","$color: steelblue;\r\n\r\n.my-flix {\r\n  color: $color;\r\n}",""]}

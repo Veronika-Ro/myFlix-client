@@ -55,7 +55,7 @@ export function RegistrationView(props) {
 
                     <Form.Group controlId="formBasicDateOfBirth">
                         <Form.Label>Date of birth:</Form.Label>
-                        <Form.Control type="birthday" placeholder="Enter your Date of Birth" value={birthday} onChange={e => setBirthday(e.target.value)} />
+                        <Form.Control type="birthday" placeholder="DD.MM.YYYY" value={birthday} onChange={e => setBirthday(e.target.value)} />
                     </Form.Group>
                     <Button variant="outline-dark" type="submit" onClick={handleSubmit}>Submit</Button>
                 </Form>
@@ -69,6 +69,6 @@ RegistrationView.propTypes = {
         Username: PropTypes.string.isRequired,
         Password: PropTypes.string.isRequired,
         Email: PropTypes.string.isRequired,
-        Birthday: PropTypes.number
+        Birthday: PropTypes.date
     })
 };
