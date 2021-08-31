@@ -64,9 +64,6 @@ class MainView extends React.Component {
 
             .then((response) => {
                 this.props.setUser(response.data)
-                this.setState({
-                    user: response.data
-                });
             })
             .catch(function (error) {
                 console.log('error getting user', error);
@@ -105,13 +102,11 @@ class MainView extends React.Component {
 
     // all class components need render and return method to display info and functions need the return method
     render() {
-        let { movies } = this.props;
-        let { onLoggedIn, registered, user, selectedMovie, userData } = this.state;
-
+        let { movies, user } = this.props;
         return (
             <Router>
 
-                {user && <Row> <Col className="mb-5">
+                {user && <Row> <Col className="mb-1">
                     <Navbar bg="dark" variant="dark">
                         <Navbar.Brand as={Link} to="/">MyFlix</Navbar.Brand>
                         <Nav className="mr-auto">

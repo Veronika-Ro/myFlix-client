@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 
 
 export function UpdateView(props) {
-    const [username, setUserName] = useState('');
+    const [username, setUserName] = useState(''); //props.user.UserName?
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [birthday, setBirthday] = useState('');

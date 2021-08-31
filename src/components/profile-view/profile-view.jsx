@@ -14,41 +14,6 @@ import './profile-view.scss';
 
 export class ProfileView extends React.Component {
 
-    constructor() {
-        super();
-        this.state = {
-            username: null,
-            password: null,
-            email: null,
-            birthday: null,
-            favoriteMovies: [],
-            movies: []
-        };
-    }
-
-    componentDidMount() {
-        let accessToken = localStorage.getItem("token");
-        this.getUser(accessToken);
-    }
-
-    getUser(token) {
-        let url = 'https://veronikas-myflix-app.herokuapp.com/users/' +
-            localStorage.getItem('user');
-        axios
-            .get(url, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-
-            .then((response) => {
-                this.props.setUser(response.data)
-                this.setState({
-                    user: response.data
-                });
-            })
-            .catch(function (error) {
-                console.log('error getting user', error);
-            });
-    }
 
     handleDelete() {
         const token = localStorage.getItem("token");
@@ -80,6 +45,9 @@ export class ProfileView extends React.Component {
             .then((response) => {
                 alert("Movie was removed");
                 this.componentDidMount();
+            })
+            .catch(function (error) {
+                console.log(error);
             });
     }
 
@@ -92,9 +60,7 @@ export class ProfileView extends React.Component {
 
     render() {
         const { movies, user, onBackClick } = this.props;
-        const favoriteMovieList = movies.filter((movie) => {
-            return this.state.favoriteMovies.includes(movie._id);
-        });
+        const favoriteMovieList = this.props.movies.filter(movie => this.props.user.FavoriteMovies.includes(movie._id));
 
         return (
             <div className="userProfile" style={{ display: "flex" }}>
@@ -105,20 +71,20 @@ export class ProfileView extends React.Component {
 
                             <Form.Group controlId="formUsername">
                                 <h4>Username:</h4>
-                                <Form.Label>{this.state.username}</Form.Label>
+                                <Form.Label>{this.props.user.UserName}</Form.Label>
 
                             </Form.Group>
                             <Form.Group controlId="formBasicEmail">
                                 <h4>Email:</h4>
-                                <Form.Label>{this.state.email}</Form.Label>
+                                <Form.Label>{this.props.user.Email}</Form.Label>
                             </Form.Group>
 
                             <Form.Group controlId="formBasicDate">
                                 <h4>Date of Birth:</h4>
-                                <Form.Label>{this.state.birthday}</Form.Label>
+                                <Form.Label>{this.props.user.Birthday}</Form.Label>
                             </Form.Group>
 
-                            <Link to={`${this.state.username}/update`}>
+                            <Link to={`${this.props.user.UserName}/update`}>
                                 <Button className="mb-2" variant="outline-dark"
                                     type="link"
                                     size="md">
@@ -140,7 +106,7 @@ export class ProfileView extends React.Component {
                         {favoriteMovieList.map((movie) => {
 
                             if (favoriteMovieList.length === 0) {
-                                <p>You have no favorites yet.</p>
+                                <p>Search for movies and add to favorites to have your personal list of favorite movies here!</p>
                             }
 
                             return (
@@ -183,3 +149,4 @@ let mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, { setUser })(ProfileView);
+
