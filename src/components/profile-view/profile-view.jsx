@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Row, Col, Form, FormControl, Card } from 'react-bootstrap';
+import { Button, Row, Col, Form, Image, Card } from 'react-bootstrap';
 
 import { setUser } from '../../actions/actions';
 
@@ -101,8 +101,8 @@ export class ProfileView extends React.Component {
                         <Button variant="outline-dark" block onClick={() => { onBackClick() }}>Back</Button>
                     </Col>
 
-                    <Col>
-                        <h5>Favorite Movies: </h5>
+                    <Col style={{ margin: '2em' }}>
+                        <h2 style={{ textAlign: "center" }}>Favorite Movies: </h2>
                         {favoriteMovieList.map((movie) => {
 
                             if (favoriteMovieList.length === 0) {
@@ -111,19 +111,22 @@ export class ProfileView extends React.Component {
 
                             return (
                                 <div>
-                                    <Card>
-                                        <Card.Img variant="top" src={movie.ImageUrl} />
-                                        <Card.Body>
+                                    <Row xs ClassName="border">
+                                        <Col sm={4}>
+                                            <Image
+                                                width="40%" height="95%" src={movie.ImagePath} thumbnail />
+                                        </Col>
+                                        <Col sm={6}>
                                             <Link to={`/movies/${movie._id}`}>
                                                 <Card.Title>{movie.Title}</Card.Title>
                                             </Link>
-                                        </Card.Body>
-                                    </Card>
-                                    <div>
-                                        <Button variant="dark" onClick={() => this.removeFavorite(movie)}>
-                                            Remove
-                                        </Button>
-                                    </div>
+                                        </Col>
+                                        <Col sm={2}>
+                                            <Button variant="dark" onClick={() => this.removeFavorite(movie)}>
+                                                Remove
+                                            </Button>
+                                        </Col>
+                                    </Row>
                                 </div>
                             );
                         })}

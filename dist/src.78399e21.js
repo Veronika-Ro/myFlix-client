@@ -54461,23 +54461,42 @@ var ProfileView = /*#__PURE__*/function (_React$Component) {
         onClick: function onClick() {
           onBackClick();
         }
-      }, "Back")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Col, null, /*#__PURE__*/_react.default.createElement("h5", null, "Favorite Movies: "), favoriteMovieList.map(function (movie) {
+      }, "Back")), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Col, {
+        style: {
+          margin: '2em'
+        }
+      }, /*#__PURE__*/_react.default.createElement("h2", {
+        style: {
+          textAlign: "center"
+        }
+      }, "Favorite Movies: "), favoriteMovieList.map(function (movie) {
         if (favoriteMovieList.length === 0) {
           /*#__PURE__*/
           _react.default.createElement("p", null, "Search for movies and add to favorites to have your personal list of favorite movies here!");
         }
 
-        return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Card, null, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Card.Img, {
-          variant: "top",
-          src: movie.ImageUrl
-        }), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Card.Body, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+        return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Row, {
+          xs: true,
+          ClassName: "border"
+        }, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Col, {
+          sm: 4
+        }, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Image, {
+          width: "40%",
+          height: "95%",
+          src: movie.ImagePath,
+          thumbnail: true
+        })), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Col, {
+          sm: 6
+        }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
           to: "/movies/".concat(movie._id)
-        }, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Card.Title, null, movie.Title)))), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Button, {
+        }, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Card.Title, null, movie.Title))), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Col, {
+          sm: 2
+        }, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Button, {
           variant: "dark",
           onClick: function onClick() {
             return _this2.removeFavorite(movie);
           }
-        }, "Remove")));
+        }, "Remove"))));
       }))));
     }
   }]);
@@ -55190,9 +55209,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             md: 8
           }, /*#__PURE__*/_react.default.createElement(_profileView.ProfileView, {
             movies: movies,
-            getUser: function getUser(token) {
-              return _this4.getUser(token);
-            },
+            user: user,
             onBackClick: function onBackClick() {
               return history.goBack();
             }

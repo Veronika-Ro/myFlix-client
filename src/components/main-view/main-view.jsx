@@ -175,7 +175,7 @@ class MainView extends React.Component {
                         return <Col md={8}>
                             <ProfileView
                                 movies={movies}
-                                getUser={(token) => this.getUser(token)}
+                                user={user}
                                 onBackClick={() => history.goBack()} />
                         </Col>
                     }} />
