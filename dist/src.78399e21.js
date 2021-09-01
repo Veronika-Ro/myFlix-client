@@ -54570,7 +54570,7 @@ function UpdateView(props) {
   var _useState = (0, _react.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
       username = _useState2[0],
-      setUserName = _useState2[1]; //props.user.UserName?
+      setUserName = _useState2[1]; //props.user.UserName if we want to use Redux
 
 
   var _useState3 = (0, _react.useState)(''),
@@ -54588,29 +54588,11 @@ function UpdateView(props) {
       birthday = _useState8[0],
       setBirthday = _useState8[1];
 
-  var _useState9 = (0, _react.useState)({}),
-      _useState10 = _slicedToArray(_useState9, 2),
-      usernameError = _useState10[0],
-      setUserNmeError = _useState10[1];
-
-  var _useState11 = (0, _react.useState)({}),
-      _useState12 = _slicedToArray(_useState11, 2),
-      passwordError = _useState12[0],
-      setPasswordError = _useState12[1];
-
-  var _useState13 = (0, _react.useState)({}),
-      _useState14 = _slicedToArray(_useState13, 2),
-      emailError = _useState14[0],
-      setEmailError = _useState14[1];
-
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
     var token = localStorage.getItem("token");
     var user = localStorage.getItem("user");
     console.log("User details have been updated");
-    /*  let setisValid = formValidation();
-      if (setisValid) */
-
     {
       _axios.default.put("https://veronikas-myflix-app.herokuapp.com/users/".concat(user), {
         UserName: username,
@@ -54636,36 +54618,7 @@ function UpdateView(props) {
       });
     }
   };
-  /* const formValidation = () => {
-       let UserNameError = {};
-       let EmailError = {};
-       let PasswordError = {};
-       let BirthdayError = {};
-       let isValid = true;
-          if (username.length < 5) {
-           UserNameError.usernameShort = "Must be alphanumeric and contain more than 5 characters";
-           isValid = false;
-       }
-       if (password.length < 3) {
-           PasswordError.passwordMissing = "You must enter a current password, or new password must be longer than 3 characters.";
-           isValid = false;
-       }
-       if (!(email && email.includes(".") && email.includes("@"))) {
-           EmailError.emailNotEmail = "Must enter a valid email address.";
-           isValid = false;
-       }
-       if (birthday === '') {
-           BirthdayError.birthdayEmpty = "Please enter your birthday.";
-           isValid = false;
-       }
-       useState({
-           UserNameError: UserNameError,
-           PasswordError: PasswordError,
-           EmailError: EmailError,
-           BirthdayError: BirthdayError,
-       })
-       return isValid;
-   }; */
+  /*Form validation to be added*/
 
 
   return /*#__PURE__*/_react.default.createElement(_Row.default, {
@@ -55192,7 +55145,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           }));
         }
       }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-        path: "/users/:userId",
+        path: "/users/:UserName",
         render: function render(_ref4) {
           var history = _ref4.history;
           if (!user) return /*#__PURE__*/_react.default.createElement(_Col.default, {
@@ -55358,7 +55311,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54346" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53028" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

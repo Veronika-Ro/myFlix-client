@@ -12,22 +12,19 @@ import { connect } from 'react-redux';
 
 
 export function UpdateView(props) {
-    const [username, setUserName] = useState(''); //props.user.UserName?
+    const [username, setUserName] = useState(''); //props.user.UserName if we want to use Redux
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [birthday, setBirthday] = useState('');
 
-    const [usernameError, setUserNmeError] = useState({});
-    const [passwordError, setPasswordError] = useState({});
-    const [emailError, setEmailError] = useState({});
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
         let token = localStorage.getItem("token");
         let user = localStorage.getItem("user");
         console.log("User details have been updated");
-        /*  let setisValid = formValidation();
-          if (setisValid) */
+
         {
 
             axios
@@ -57,37 +54,7 @@ export function UpdateView(props) {
         }
     }
 
-    /* const formValidation = () => {
-         let UserNameError = {};
-         let EmailError = {};
-         let PasswordError = {};
-         let BirthdayError = {};
-         let isValid = true;
- 
-         if (username.length < 5) {
-             UserNameError.usernameShort = "Must be alphanumeric and contain more than 5 characters";
-             isValid = false;
-         }
-         if (password.length < 3) {
-             PasswordError.passwordMissing = "You must enter a current password, or new password must be longer than 3 characters.";
-             isValid = false;
-         }
-         if (!(email && email.includes(".") && email.includes("@"))) {
-             EmailError.emailNotEmail = "Must enter a valid email address.";
-             isValid = false;
-         }
-         if (birthday === '') {
-             BirthdayError.birthdayEmpty = "Please enter your birthday.";
-             isValid = false;
-         }
-         useState({
-             UserNameError: UserNameError,
-             PasswordError: PasswordError,
-             EmailError: EmailError,
-             BirthdayError: BirthdayError,
-         })
-         return isValid;
-     }; */
+    /*Form validation to be added*/
 
     return (
         <Row className="justify-content-md-center">
